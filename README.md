@@ -26,9 +26,9 @@ Nastavení pinů desky [Nexys A7-50T](nexys.xdc)
 Pro správné propojení kódu VHDL s fyzickým hardwarem desky Nexys A7-50T využijeme constraints soubor (.xdc). V něm namapujeme tyto porty:
 #### Tlačítka
 * **BTNC:** Tlačítko na reset
-* **BTNL:** Tlačítko pro nastavení svítivosti (Brightness)
-* **BTNR:** Tlačítko pro nastavení rychlosti (Speed)
-* **BTNU/BTND:** Výběr hodnoty pro dané nastavení
+* **BTNL:** Přepnutí do režimu nastavení svítivosti (Brightness)
+* **BTNR:** Přepnutí do režimu nastavení rychlosti (Speed)
+* **BTNU/BTND:** Zvyšování / snižování hodnoty pro dané nastavení
 #### RGB
-* **LED17_R, LED17_G, LED17_B**
+* **LED17_R, LED17_G, LED17_B:** Pro ovládání jednotlivých barev
 ## Lab2: Unit Design
