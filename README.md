@@ -1,9 +1,9 @@
 # DE1 Projekt
 ### Členové týmu
-#### Jakub Dibelka
-návrh a tvorba programu
-#### Libor Brostík
-finální dokumentace projektu (README.md) a tvorba programu
+  #### Jakub Dibelka
+  návrh a tvorba programu
+  #### Libor Brostík
+  finální dokumentace projektu (README.md) a tvorba programu
 
 
 Toto je projekt pro předmět DE1 na téma 5. RGB MOOD LAMP
