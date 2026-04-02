@@ -11,10 +11,10 @@
 ## Cíl projektu
 Cílem projektu je návrh a implementace ovladače pro RGB lampu na desce Nexys A7-50T. Lampa umožňuje uživateli měnit parametry lampy pomocí tlačítek na desce
 ### Základní funkce
-* #### Výběr barvy ####: Možnost přepínat mezi předdefinovanými barvami
-* #### Úprava svítivosti: Zvyšení nebo snížení intenzity světla pomocí PWM
-* #### Úprava rychlosti: Snižování nebo zvyšování rychlosti pulzování nebo prolínání barev
-* #### Reset: Návrat parametrů do původního stavu
+* **Výběr barvy:** Možnost přepínat mezi předdefinovanými barvami
+* **Úprava svítivosti:** Zvyšení nebo snížení intenzity světla pomocí PWM
+* **Úprava rychlosti:** Snižování nebo zvyšování rychlosti pulzování nebo prolínání barev
+* **Reset:** Návrat parametrů do původního stavu
 
 ## Lab1: Architecture
 ### Blokové schéma
