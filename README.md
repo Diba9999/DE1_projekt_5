@@ -1,9 +1,9 @@
 # DE1 Projekt
 ### Členové týmu
   #### Jakub Dibelka
-  návrh a tvorba programu
+  * návrh a tvorba programu
   #### Libor Brostík
-  finální dokumentace projektu (README.md) a tvorba programu
+  * finální dokumentace projektu (README.md) a tvorba programu
   
 ### Obsah
 * [Cíl projektu](#cíl-projektu)
