@@ -29,6 +29,7 @@ Pro správné propojení kódu VHDL s fyzickým hardwarem desky Nexys A7-50T vyu
 * **BTNL:** Tlačítko pro nastavení svítivosti (Brightness)
 * **BTNR:** Tlačítko pro nastavení rychlosti (Speed)
 * **BTNU/BTND:** Výběr hodnoty pro dané nastavení
+
 ###RGB
 * **LED17_R, LED17_G, LED17_B**
 ## Lab2: Unit Design
