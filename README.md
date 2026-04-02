@@ -1,3 +1,3 @@
-# DE1_project_5
+# DE1 Projekt
 
-This is project for subject DE1.
+Toto je projekt pro předmět DE1 na téma 5. RGB MOOD LAMP
