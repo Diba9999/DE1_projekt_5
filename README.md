@@ -22,7 +22,7 @@ Návrh blokového schématu pro naší aplikaci (není finální)
 
 ![Screenshot of a block desing](img/block_design.png)
 ### Příprava .XDC souboru
-Nastavení pinů desky [Nexys A7-50T](nexys.xdc)
+Nastavení pinů desky [Nexys A7-50T](nexys.xdc).
 Pro správné propojení kódu VHDL s fyzickým hardwarem desky Nexys A7-50T využijeme constraints soubor (.xdc). V něm namapujeme tyto porty:
 #### Tlačítka
 * **BTNC:** Tlačítko na reset
