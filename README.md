@@ -40,4 +40,19 @@ Tento modul tvoří "mozek" celé aplikace.
 
 
 ### RGB PWM Driver
-Pro ovládání výsledné barvy a svítivosti lampy slouží tento modul. Přijímá číselné hodnoty a převádí je na tři nezávislé signály pulzně šířkové modulace (PWM).
+Pro ovládání výsledné barvy a svítivosti lampy slouží tento modul. Přijímá číselné hodnoty a převádí je na tři nezávislé signály pulzně šířkové modulace (PWM). Pro PWM modul zadefinujeme tyto I/O porty
+| Port name | Direction | Type | Description |
+| :--- | :---: | :--- | :--- |
+| `clk` | in | `std_logic` | Main clock |
+| `en` | in | `std_logic` | Clock enable |
+| `rst` | in | `std_logic` | High-active synchronous reset |
+| `brightness` | in | `std_logic_vector (x downto 0)` | Input value determining the overall brightness level |
+| `speed` | in | `std_logic_vector (x downto 0)` | Input value determining the speed of color transitions or pulsing |
+| `color` | in | `std_logic_vector (x downto 0)` | Input value selecting the specific color |
+| `LED_R` | out | `std_logic` | PWM output signal for the Red LED channel |
+| `LED_G` | out | `std_logic` | PWM output signal for the Green LED channel |
+| `LED_B` | out | `std_logic` | PWM output signal for the Blue LED channel |
+
+```vhdl
+Sem vložit kód
+```
