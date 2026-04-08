@@ -46,9 +46,9 @@ Pro ovládání výsledné barvy a svítivosti lampy slouží tento modul. Přij
 | `clk` | in | `std_logic` | Main clock |
 | `en` | in | `std_logic` | Clock enable |
 | `rst` | in | `std_logic` | High-active synchronous reset |
-| `brightness` | in | `std_logic_vector (x downto 0)` | Input value determining the overall brightness level |
-| `speed` | in | `std_logic_vector (x downto 0)` | Input value determining the speed of color transitions or pulsing |
-| `color` | in | `std_logic_vector (x downto 0)` | Input value selecting the specific color |
+| `brightness` | in | `std_logic_vector (6 downto 0)` | Input value determining the overall brightness level |
+| `speed` | in | `std_logic_vector (6 downto 0)` | Input value determining the speed of color transitions or pulsing |
+| `color` | in | `std_logic_vector (3 downto 0)` | Input value selecting the specific color |
 | `LED_R` | out | `std_logic` | PWM output signal for the Red LED channel |
 | `LED_G` | out | `std_logic` | PWM output signal for the Green LED channel |
 | `LED_B` | out | `std_logic` | PWM output signal for the Blue LED channel |
