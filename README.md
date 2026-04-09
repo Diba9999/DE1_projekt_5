@@ -171,8 +171,8 @@ begin
     btn4_state <= debounced(3);
 
 end Behavioral;
-
 ```
+![Screenshot of a debounce testbench](img/debounce_tb.png)
 
 ### Color FSM
 Tento modul tvoří "mozek" celé aplikace.
@@ -325,6 +325,8 @@ begin
 end Behavioral;
 ```
 
+![Screenshot of a color FSM testbench](img/color_fsm_tb.png)
+
 ### RGB PWM Driver
 Pro ovládání výsledné barvy a svítivosti lampy slouží tento modul. Přijímá číselné hodnoty a převádí je na tři nezávislé signály pulzně šířkové modulace (PWM). Pro PWM modul zadefinujeme tyto I/O porty
 | Port name | Direction | Type | Description |
@@ -408,3 +410,5 @@ process(clk)
     end process;  
 end Behavioral;
 ```
+
+![Screenshot of a PWM Driver testbench](img/pwm_driver_tb.png)
