@@ -47,6 +47,8 @@ Mechanická tlačítka při stlačení nebo uvolnění generují sérii rychlýc
 | `btn3_state` | out | `std_logic` | State of button 3 |
 | `btn4_state` | out | `std_logic` | State of button 4 |
 
+Pomocí debounce ošetříme 4 tlačítka BTNU, BTND, BTNL a BTNR proti zákmitům.
+#### Debounce VHDL
 ```vhdl
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
@@ -175,7 +177,7 @@ end Behavioral;
 ![Screenshot of a debounce testbench](img/debounce_tb.png)
 
 ### Color FSM
-Tento modul tvoří "mozek" celé aplikace.
+Tento modul tvoří "mozek" celé aplikace. Umožňuje měnit barvu, svítivost a rychlost RGB LED.
 | Port name | Direction | Type | Description |
 | :--- | :---: | :--- | :--- |
 | `clk` | in | `std_logic` | Main clock |
@@ -190,6 +192,8 @@ Tento modul tvoří "mozek" celé aplikace.
 | `green` | out | `std_logic_vector (8 downto 0)` | Calculated Green value for the PWM driver |
 | `blue` | out | `std_logic_vector (8 downto 0)` | Calculated Blue value for the PWM driver |
 
+
+#### Color FSM VHDL
 ```vhdl
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
@@ -343,6 +347,8 @@ Pro ovládání výsledné barvy a svítivosti lampy slouží tento modul. Přij
 | `led_g` | out | `std_logic` | PWM output signal for the Green LED channel |
 | `led_b` | out | `std_logic` | PWM output signal for the Blue LED channel |
 
+
+#### PWM Driver VHDL
 ```vhdl
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
