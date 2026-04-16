@@ -204,6 +204,9 @@ Tento modul tvoří "mozek" celé aplikace. Umožňuje měnit barvu, svítivost 
 
 
 #### Color FSM VHDL
+<details>
+<summary>Kód zde</summary>
+
 ```vhdl
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
@@ -338,6 +341,8 @@ begin
 
 end Behavioral;
 ```
+</details>
+
 #### Color FSM Testbench
 ![Screenshot of a color FSM testbench](img/color_fsm_tb.png)
 Kód pro color fsm testbench [zde](testbenches/color_fsm_tb.vhd)
@@ -360,6 +365,9 @@ Pro ovládání výsledné barvy a svítivosti lampy slouží tento modul. Přij
 
 
 #### PWM Driver VHDL
+<details>
+<summary>Kód zde</summary>
+
 ```vhdl
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
@@ -429,6 +437,8 @@ process(clk)
     end process;  
 end Behavioral;
 ```
+</details>
+
 #### PWM Driver Testbench
 ![Screenshot of a PWM Driver testbench](img/pwm_driver_tb.png)
 Kód pro pwm driver testbench [zde](testbenches/pwm_driver_tb.vhd)
