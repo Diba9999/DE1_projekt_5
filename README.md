@@ -447,7 +447,14 @@ Kód pro pwm driver testbench [zde](testbenches/pwm_driver_tb.vhd)
 ## Lab3: Integration
 ### 7-segment display
 Pro lepší přehled nad aktuálním nastavením byl dodatečně přidán modul pro 7-segmentový displej. Díky němu můžeme sledovat aktualní hodnoty dle vybraného nastavení
-
+#### 7-segment VHDL
+<details>
+<summary>Kód zde</summary>
+  
+```vhdl
+Kód vložit sem
+```
+</details>
 
 ### Top-Level
 Je to hlavní entita, která je spojnice mezi programem a hardwarem. V této entitě se inicializují vstupy a výstupy všech modulů.
