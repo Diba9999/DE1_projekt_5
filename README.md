@@ -25,7 +25,7 @@ Cílem projektu je návrh a implementace ovladače pro RGB lampu na desce Nexys 
 ### Blokové schéma
 Návrh blokového schématu pro naší aplikaci
 
-<img src="img/Design_v4.drawio.png" width="500">
+![Screenshot of a block desing](img/Design_v4.drawio.png)
 
 ### Příprava .XDC souboru
 Pro správné propojení kódu VHDL s fyzickým hardwarem desky [Nexys A7-50T](nexys.xdc) využijeme constraints soubor (.xdc). V něm namapujeme tyto porty:
@@ -189,7 +189,10 @@ end Behavioral;
 </details>
 
 #### Debounce Testbench
-![Screenshot of a debounce testbench](img/debounce_tb.png)
+<p align="center">
+  <img src="img/debounce_tb.png" width="700"><br>
+  <em>Debounce Testbench</em>
+</p>
 Kód pro debounce testbench [zde](testbenches/debounce_tb.vhd)
 
 ### Color Control
