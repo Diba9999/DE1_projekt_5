@@ -353,12 +353,12 @@ end Behavioral;
 ```
 </details>
 
-<h2 align="center">Color Control Testbench</h2>
-<p align="center">
+#### Color Control Testbench
+<p>
   <img src="img/color_fsm_tb.png" width="800"><br>
+  <em><a href="testbenches/color_fsm_tb.vhd">VHDL Testbench</a></em>
 </p>
 
-Kód pro color Control testbench [zde](testbenches/color_fsm_tb.vhd)
 > [!NOTE]
 > Testbench není finální (může se ještě změnit).
 
@@ -455,9 +455,8 @@ end Behavioral;
 #### PWM Driver Testbench
 <p>
   <img src="img/pwm_driver_tbv2.png" width="800"><br>
+  <em><a href="testbenches/pwm_driver_tb.vhd">VHDL Testbench</a></em>
 </p>
-
-Kód pro pwm driver testbench [zde](testbenches/pwm_driver_tb.vhd)
 
 ## Lab3: Integration
 ### 7-segment display
