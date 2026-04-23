@@ -23,7 +23,7 @@ Cílem projektu je návrh a implementace ovladače pro RGB lampu na desce Nexys 
 ### Blokové schéma
 Návrh blokového schématu pro naší aplikaci
 
-![Screenshot of a block desing](img/Top_level_design_v3.drawio.png)
+![Screenshot of a block desing](img/Design_v4.drawio.png)
 
 ### Příprava .XDC souboru
 Pro správné propojení kódu VHDL s fyzickým hardwarem desky [Nexys A7-50T](nexys.xdc) využijeme constraints soubor (.xdc). V něm namapujeme tyto porty:
@@ -187,7 +187,7 @@ end Behavioral;
 ![Screenshot of a debounce testbench](img/debounce_tb.png)
 Kód pro debounce testbench [zde](testbenches/debounce_tb.vhd)
 
-### Color FSM
+### Color Control
 Tento modul tvoří "mozek" celé aplikace. Umožňuje měnit barvu, svítivost a rychlost RGB LED.
 | Port name | Direction | Type | Description |
 | :--- | :---: | :--- | :--- |
@@ -204,7 +204,7 @@ Tento modul tvoří "mozek" celé aplikace. Umožňuje měnit barvu, svítivost 
 | `blue` | out | `std_logic_vector (8 downto 0)` | Calculated Blue value for the PWM driver |
 
 
-#### Color FSM VHDL
+#### Color Control VHDL
 <details>
 <summary>Kód zde</summary>
 
@@ -213,96 +213,91 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
-entity color_fsm is
-    Port ( -- Vstupy
-           clk          : in  STD_LOGIC;
-           rst          : in  STD_LOGIC;
-           en           : in  STD_LOGIC;
-           up           : in  STD_LOGIC;
-           down         : in  STD_LOGIC;
-           mode_speed   : in  STD_LOGIC;
-           mode_brig    : in  STD_LOGIC;
-           -- Výstupy pro informaci ( 7-segmentovka)
-           brig         : out STD_LOGIC_VECTOR (3 downto 0);
-           speed        : out STD_LOGIC_VECTOR (3 downto 0);
-           -- Výstupy pro PWM drivery (8 bitů pro každou barvu)
-           red          : out STD_LOGIC_VECTOR (7 downto 0);
-           green        : out STD_LOGIC_VECTOR (7 downto 0);
-           blue         : out STD_LOGIC_VECTOR (7 downto 0)
-           );
-end color_fsm;
+entity color_control is
+    Port ( 
+        clk          : in  STD_LOGIC;
+        rst          : in  STD_LOGIC;
+        en           : in  STD_LOGIC;
+        up           : in  STD_LOGIC;
+        down         : in  STD_LOGIC;
+        mode_speed   : in  STD_LOGIC;
+        mode_brig    : in  STD_LOGIC;
+        value        : out STD_LOGIC_VECTOR (7 downto 0);
+        red          : out STD_LOGIC_VECTOR (7 downto 0);
+        green        : out STD_LOGIC_VECTOR (7 downto 0);
+        blue         : out STD_LOGIC_VECTOR (7 downto 0)
+    );
+end color_control;
 
-architecture Behavioral of color_fsm is
+architecture Behavioral of color_control is
 
-    -- Definice stavů pro FSM ovládání (tlačítka)
     type btn_state is (SET_BRIGHTNESS, SET_SPEED);
     signal MODE : btn_state := SET_BRIGHTNESS;
 
-    -- Registry pro uživatelské nastavení (rozsah 0-10)
-    signal brig_reg  : unsigned(3 downto 0)  := "0110"; -- Výchozí jas = 6
-    signal speed_reg : unsigned(3 downto 0)  := "0101"; -- Výchozí rychlost = 5 (5 sekund)
+    signal brig_reg  : unsigned(3 downto 0)  := "0101"; -- Jas 5
+    signal speed_reg : unsigned(3 downto 0)  := "0101"; -- Rychlost 5
 
-    -- Vnitřní registry pro plynulou barvu (8-bitové, rozsah 0-255)
+    -- Edge Detection registry
+    signal up_last, down_last        : STD_LOGIC := '0';  -- Pro UP a DOWN
+    signal m_speed_last, m_brig_last : STD_LOGIC := '0';  -- Pro tlačítka L (brig) a R (speed)
+
+    -- Barvy
     signal r_cnt : unsigned(7 downto 0) := x"FF"; 
     signal g_cnt : unsigned(7 downto 0) := x"00";
     signal b_cnt : unsigned(7 downto 0) := x"00";
 
-    -- Časovače pro přesné sekundy (clk 100 MHz)
-    -- Výpočet tiků za sekundu: takt 100 MHz / 765 barevných kroků = 130718 taktů na 1 krok pro 1 sekundu
-    constant TICKS_PER_SEC : unsigned(19 downto 0) := to_unsigned(130718, 20);
+    -- Časování (100 MHz)
+    constant TICKS_PER_SEC : unsigned(19 downto 0) := to_unsigned(65000, 20); 
     signal delay_counter   : unsigned(23 downto 0) := (others => '0');
 
 begin
 
-    -- Hlavní synchronní proces
     p_color_control : process(clk)
         variable target_delay : unsigned(23 downto 0);
     begin
         if rising_edge(clk) then
             if (rst = '1') then
-                MODE          <= SET_BRIGHTNESS;
-                brig_reg      <= "0110";
-                speed_reg     <= "0101"; -- Návrat na 5 sekund
-                r_cnt         <= x"FF";  -- Reset na plnou červenou
-                g_cnt         <= x"00";
-                b_cnt         <= x"00";
+                MODE <= SET_BRIGHTNESS;
+                brig_reg <= "0101";
+                speed_reg <= "0101";
+                r_cnt <= x"FF"; g_cnt <= x"00"; b_cnt <= x"00";
                 delay_counter <= (others => '0');
+                up_last <= '0'; down_last <= '0';
+                m_speed_last <= '0'; m_brig_last <= '0';
                 
             elsif (en = '1') then
                 
-                -- 1) LOGIKA PŘEPÍNÁNÍ REŽIMŮ A NASTAVENÍ (Jas/Rychlost)
-                case MODE is
-                    when SET_BRIGHTNESS =>
-                        if (up = '1') and (brig_reg < 10) then  -- Změna maxima reg. speed
-                            brig_reg <= brig_reg + 1;
-                        elsif (down = '1') and (brig_reg > 0) then
-                            brig_reg <= brig_reg - 1;
-                        end if;
+                -- --- OVLÁDÁNÍ ( POMOCÍ DETEKCE HRANY) ---
+                -- Výběr režimů
+                if (mode_speed = '1' and m_speed_last = '0') then MODE <= SET_SPEED; end if;
+                if (mode_brig = '1' and m_brig_last = '0')   then MODE <= SET_BRIGHTNESS; end if;
 
-                        if (mode_speed = '1') then MODE <= SET_SPEED; end if;
+                -- Příčítání při zmáčknutí UP
+                if (up = '1' and up_last = '0') then
+                    if (MODE = SET_BRIGHTNESS and brig_reg < 10) then brig_reg <= brig_reg + 1;
+                    elsif (MODE = SET_SPEED and speed_reg < 10)  then speed_reg <= speed_reg + 1;
+                    end if;
+                end if;
 
-                    when SET_SPEED =>
-                        if (up = '1') and (speed_reg < 10) then   -- Změna maxima reg. speed
-                            speed_reg <= speed_reg + 1;
-                        elsif (down = '1') and (speed_reg > 0) then
-                            speed_reg <= speed_reg - 1;
-                        end if;
+                -- Odečítání při zmáčknutí DOWN
+                if (down = '1' and down_last = '0') then
+                    if (MODE = SET_BRIGHTNESS and brig_reg > 0) then brig_reg <= brig_reg - 1;
+                    elsif (MODE = SET_SPEED and speed_reg > 0)  then speed_reg <= speed_reg - 1;
+                    end if;
+                end if;
+                
+                -- Uložení poslední hodnoty pro porovnání s novou (detekce hrany)
+                up_last <= up; down_last <= down;
+                m_speed_last <= mode_speed; m_brig_last <= mode_brig;
 
-                        if (mode_brig = '1') then MODE <= SET_BRIGHTNESS; end if;
-                end case;
-
-                -- 2) LOGIKA PLYNULÉHO PŘECHODU BAREV S PŘESNÝM ČASOVÁNÍM A PAUZOU
+                -- --- BAREVNÝ EFEKT (OBRÁCENÁ RYCHLOST) ---
                 if (speed_reg > 0) then
+                    --          1 -> (11-1) *TICKS => POMALÉ
+                    --         10 -> (11-10)*TICKS => RYCHLÉ
+                    target_delay := (to_unsigned(11, 4) - speed_reg) * TICKS_PER_SEC;
                     
-                    -- Výpočet cílového zpoždění (např. 10 * 130718 = 10 sekund)
-                    target_delay := speed_reg * TICKS_PER_SEC; 
-                    
-                    delay_counter <= delay_counter + 1;
-
                     if (delay_counter >= target_delay) then
-                        delay_counter <= (others => '0'); -- Reset čítače zpoždění
-                        
-                        -- Krok duhy
+                        delay_counter <= (others => '0');
                         if (r_cnt > 0 and b_cnt = 0) then
                             r_cnt <= r_cnt - 1; g_cnt <= g_cnt + 1;
                         elsif (g_cnt > 0 and r_cnt = 0) then
@@ -310,43 +305,48 @@ begin
                         elsif (b_cnt > 0 and g_cnt = 0) then
                             b_cnt <= b_cnt - 1; r_cnt <= r_cnt + 1;
                         end if;
+                    else
+                        delay_counter <= delay_counter + 1;
                     end if;
-                    
                 else
-                    -- Rychlost je 0 = PAUZA
-                    -- Vynulujeme čítač pro budoucí spuštění, ale barvy (r,g,b) zůstávají beze změny
-                    delay_counter <= (others => '0');
+                    delay_counter <= (others => '0'); -- Speed 0 = Pauza
                 end if;
-                
             end if;
         end if;
-    end process p_color_control;
+    end process;
 
-    -- VÝPOČET FINÁLNÍHO BARVY (i s jasem)
+    -- Aplikace jasu (pomocí násobení)
     p_brightness_apply : process(r_cnt, g_cnt, b_cnt, brig_reg)
-        variable r, g, b : unsigned(11 downto 0); 
+        variable r_tmp, g_tmp, b_tmp : unsigned(11 downto 0); 
     begin
-        r := r_cnt * brig_reg;
-        g := g_cnt * brig_reg;
-        b := b_cnt * brig_reg;
-        
-        -- 12bitového výsledku vezmeme horních 8 bitů a pošleme je na výstup FSm
-        red   <= std_logic_vector(r(11 downto 4));
-        green <= std_logic_vector(g(11 downto 4));
-        blue  <= std_logic_vector(b(11 downto 4));
-    end process p_brightness_apply;
+        -- Dočasné hodnoty velikost 12bit
+        r_tmp := r_cnt * brig_reg;
+        g_tmp := g_cnt * brig_reg;
+        b_tmp := b_cnt * brig_reg;
+        -- Oříznutí pouze 8 horních bitů
+        red   <= std_logic_vector(r_tmp(11 downto 4));
+        green <= std_logic_vector(g_tmp(11 downto 4));
+        blue  <= std_logic_vector(b_tmp(11 downto 4));
+    end process;
 
-    -- Přiřazení vnitřních registrů na výstup
-    brig  <= std_logic_vector(brig_reg);
-    speed <= std_logic_vector(speed_reg);
+    -- Výstup na displej
+    p_display_out : process(MODE, brig_reg, speed_reg)
+        variable val : unsigned(3 downto 0);
+    begin
+        if MODE = SET_BRIGHTNESS then val := brig_reg; else val := speed_reg; end if;
+        
+        if val = 10 then value <= x"10";  -- Při val = 0 zapsání x10, aby se nezobarzilo A 
+        else value <= "0000" & std_logic_vector(val);
+        end if;
+    end process;
 
 end Behavioral;
 ```
 </details>
 
-#### Color FSM Testbench
-![Screenshot of a color FSM testbench](img/color_fsm_tb.png)
-Kód pro color fsm testbench [zde](testbenches/color_fsm_tb.vhd)
+#### Color Control Testbench
+![Screenshot of a color Control testbench](img/color_fsm_tb.png)
+Kód pro color Control testbench [zde](testbenches/color_fsm_tb.vhd)
 > [!NOTE]
 > Testbench není finální (může se ještě změnit).
 
@@ -452,7 +452,112 @@ Pro lepší přehled nad aktuálním nastavením byl dodatečně přidán modul 
 <summary>Kód zde</summary>
   
 ```vhdl
-Kód vložit sem
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+
+entity display_driver is
+    Port ( clk   : in  STD_LOGIC;
+           rst   : in  STD_LOGIC;
+           data  : in  STD_LOGIC_VECTOR (7 downto 0);
+           seg   : out STD_LOGIC_VECTOR (6 downto 0);
+           anode : out STD_LOGIC_VECTOR (7 downto 0)
+           );
+end display_driver;
+
+architecture Behavioral of display_driver is
+
+    -- Component declaration for clock enable
+    component clk_en is
+        generic ( G_MAX : positive );
+        port (
+            clk : in  std_logic;
+            rst : in  std_logic;
+            ce  : out std_logic
+        );
+    end component clk_en;
+ 
+    -- Component declaration for binary counter
+    component counter is
+        generic ( G_BITS : positive );
+        port (
+            clk : in  std_logic;
+            rst : in  std_logic;
+            en  : in  std_logic;
+            cnt : out std_logic_vector(G_BITS - 1 downto 0)
+        );
+    end component counter;
+ 
+    component bin2seg is 
+        port ( bin : in  STD_LOGIC_VECTOR (3 downto 0);
+               seg : out STD_LOGIC_VECTOR (6 downto 0)
+        );
+
+    end component bin2seg;
+ 
+    -- Internal signals
+    signal sig_en    : std_logic;
+    signal sig_digit : std_logic_vector(0 downto 0);
+    signal sig_bin   : std_logic_vector(3 downto 0);
+
+
+begin
+
+    ------------------------------------------------------------------------
+    -- Clock enable generator for refresh timing
+    ------------------------------------------------------------------------
+    clock_0 : clk_en
+        generic map ( G_MAX => 160_000 )  -- Adjust for flicker-free multiplexing
+        port map (                   -- For simulation: 16
+            clk => clk,              -- For implementation: 1_600_000
+            rst => rst,
+            ce  => sig_en
+        );
+
+    ------------------------------------------------------------------------
+    -- N-bit counter for digit selection
+    ------------------------------------------------------------------------
+    counter_0 : counter
+        generic map ( G_BITS => 1 )
+        port map (
+            clk => clk,
+            rst => rst,
+            en  => sig_en,
+            cnt => sig_digit
+        );
+
+    ------------------------------------------------------------------------
+    -- Digit select
+    ------------------------------------------------------------------------
+    sig_bin <= data(3 downto 0) when sig_digit = "0" else
+               data(7 downto 4);
+
+    ------------------------------------------------------------------------
+    -- 7-segment decoder
+    ------------------------------------------------------------------------
+    decoder_0 : bin2seg
+        port map (
+            bin => sig_bin,
+            seg => seg   
+        );
+
+    ------------------------------------------------------------------------
+    -- Anode select process
+    ------------------------------------------------------------------------
+    p_anode_select : process (sig_digit) is
+    begin
+        case sig_digit is
+            when "0" =>
+                anode <= "11111110";  -- Right digit active
+            when "1" =>
+                anode <= "11111101";  -- Left digit active
+            
+            when others =>
+                anode <= "11111111";  -- All off
+        end case;
+    end process;
+
+end Behavioral;
 ```
 </details>
 
@@ -508,7 +613,7 @@ architecture Behavioral of RGB_Mood_Lamp_top is
                ce  : out STD_LOGIC);
     end component;
 
-    component color_fsm is
+    component color_control is
         Port ( clk          : in  STD_LOGIC;
                rst          : in  STD_LOGIC;
                en           : in  STD_LOGIC;
@@ -552,16 +657,16 @@ architecture Behavioral of RGB_Mood_Lamp_top is
     -- ==========================================
     
     -- Signály z debounce filtru
-    signal btnu_deb, btnd_deb, btnl_deb, btnr_deb : STD_LOGIC;
+    signal sig_btnu, sig_btnd, sig_btnl, sig_btnr : STD_LOGIC;  
     
     -- Signály clock enable
-    signal ce_fsm    : STD_LOGIC;
-    signal ce_pwm    : STD_LOGIC;
+    signal sig_ce_ctrl   : STD_LOGIC;
+    signal sig_ce_pwm    : STD_LOGIC;
     
-    -- Datové signály barev (FSM -> PWM)
-    signal red_sig   : STD_LOGIC_VECTOR (7 downto 0);
-    signal green_sig : STD_LOGIC_VECTOR (7 downto 0);
-    signal blue_sig  : STD_LOGIC_VECTOR (7 downto 0);
+    -- Datové signály barev (CONTROL -> PWM)
+    signal sig_red   : STD_LOGIC_VECTOR (7 downto 0);
+    signal sig_green : STD_LOGIC_VECTOR (7 downto 0);
+    signal sig_blue  : STD_LOGIC_VECTOR (7 downto 0);
     
     -- Informační signály pro 7-segment (zatím nevyvedené ven z topu)
     signal sig_data  : STD_LOGIC_VECTOR (7 downto 0);
@@ -581,10 +686,10 @@ begin
             btn2       => btnd,
             btn3       => btnl,
             btn4       => btnr,
-            btn1_state => btnu_deb,
-            btn2_state => btnd_deb,
-            btn3_state => btnl_deb,
-            btn4_state => btnr_deb
+            btn1_state => sig_btnu,
+            btn2_state => sig_btnd,
+            btn3_state => sig_btnl,
+            btn4_state => sig_btnr
         );
         
     -- Display_driver
@@ -597,12 +702,12 @@ begin
             anode => an
         );
 
-    -- Clock enable pro FSM
-    CLK_EN_FSM_inst: clk_en
+    -- Clock enable pro Color_contro
+    CLK_EN_CTRL_inst: clk_en
         Port Map (
             clk => clk,
             rst => btnc,
-            ce  => ce_fsm
+            ce  => sig_ce_ctrl
         );
 
     -- Clock enable pro PWM
@@ -610,23 +715,23 @@ begin
         Port Map (
             clk => clk,
             rst => btnc,
-            ce  => ce_pwm
+            ce  => sig_ce_pwm
         );
 
     -- Konečný automat pro barvy a logiku aplikace
-    COLOR_FSM_inst: color_fsm
+    COLOR_CONTROL_inst: color_control
         Port Map (
             clk         => clk,
             rst         => btnc,
-            en          => ce_fsm,
-            up          => btnu_deb,
-            down        => btnd_deb,
-            mode_speed  => btnr_deb,
-            mode_brig   => btnl_deb,
+            en          => sig_ce_ctrl,
+            up          => sig_btnu,
+            down        => sig_btnd,
+            mode_speed  => sig_btnr,
+            mode_brig   => sig_btnl,
             value       => sig_data, -- Signál pro 7-segment
-            red         => red_sig,
-            green       => green_sig,
-            blue        => blue_sig
+            red         => sig_red,
+            green       => sig_green,
+            blue        => sig_blue
         );
 
     -- PWM Driver pro RGB LED
@@ -636,11 +741,11 @@ begin
         )
         Port Map (
             clk   => clk,
-            en    => ce_pwm,
+            en    => sig_ce_pwm,
             rst   => btnc,
-            red   => red_sig,
-            green => green_sig,
-            blue  => blue_sig,
+            red   => sig_red,
+            green => sig_green,
+            blue  => sig_blue,
             led_r => led17_r,
             led_g => led17_g,
             led_b => led17_b
