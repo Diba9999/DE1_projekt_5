@@ -770,4 +770,7 @@ end Behavioral;
 </details>
 
 ## Lab4: Tuning
-Tunění kódu
+Zaměřili na ladění kódu, identifikaci a následnou opravu chyb programů.
+
+## Lab5: Completion
+
