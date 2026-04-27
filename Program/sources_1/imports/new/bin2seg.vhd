@@ -1,21 +1,22 @@
 ----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
+-- Company:          VUT FEKT Brno
+-- Engineer:         Libor Brostík, Jakub Dibelka
 -- 
--- Create Date: 03/04/2026 06:17:13 PM
--- Design Name: 
--- Module Name: bin2seg - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
+-- Create Date:      08.03.2026
+-- Design Name:      bin2seg
+-- Entity Name:      bin2seg
+-- Project Name:     DE1_projekt_5
+-- Target Devices:   Nexys A7 50T
+-- Tool Versions:    Vivado 2025.2
+-- 
 -- Description: 
--- 
+--    7-segment display decoder. Converts 4-bit binary input to active-low 
+--    7-segment signal (segments A-G). Supports hex characters 0-F.
+--
 -- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
+--    None
+--
+-- License: MIT  
 ----------------------------------------------------------------------------------
 
 

@@ -1,21 +1,23 @@
 ----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
+-- Company:          VUT FEKT Brno
+-- Engineer:         Libor Brostík, Jakub Dibelka
 -- 
--- Create Date: 03/05/2026 01:25:53 PM
--- Design Name: 
--- Module Name: clk_en - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
+-- Create Date:      08.03.2026
+-- Design Name:      clk_en
+-- Entity Name:      clk_en
+-- Project Name:     DE1_projekt_5
+-- Target Devices:   Nexys A7 50T
+-- Tool Versions:    Vivado 2025.2
+-- 
 -- Description: 
--- 
+--    Clock Enable pulse generator. The module counts rising edges of the 
+--    input clock (clk) and generates a pulse of one clock cycle duration 
+--    every G_MAX cycles.
+--
 -- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
+--    None
+--
+-- License: MIT  
 ----------------------------------------------------------------------------------
 
 

@@ -1,21 +1,23 @@
 ----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
+-- Company:          VUT FEKT Brno
+-- Engineer:         Libor Brostík, Jakub Dibelka
 -- 
--- Create Date: 08.04.2026 19:57:59
--- Design Name: 
--- Module Name: pwm_driver - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
+-- Create Date:      08.04.2026
+-- Design Name:      pwm_driver
+-- Entity Name:      pwm_driver
+-- Project Name:     DE1_projekt_5
+-- Target Devices:   Nexys A7 50T
+-- Tool Versions:    Vivado 2025.2
+-- 
 -- Description: 
--- 
+--    3-channel PWM (Pulse Width Modulation) driver for RGB LED control. 
+--    Uses a shared free-running counter and independent comparators 
+--    to generate duty cycles for Red, Green, and Blue channels.
+--
 -- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
+--    None
+--
+-- License: MIT  
 ----------------------------------------------------------------------------------
 
 

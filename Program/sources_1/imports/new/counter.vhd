@@ -1,21 +1,23 @@
--------------------------------------------------
---! @brief N-bit synchronous up counter with enable
---! @version 1.4
---! @copyright (c) 2019-2026 Tomas Fryza, MIT license
---!
---! This design implements a parameterizable N-bit
---! binary up counter with synchronous, high-active
---! reset and clock enable input. The counter wraps
---! around to zero after reaching its maximum value
---! (2^G_BITS - 1).
+----------------------------------------------------------------------------------
+-- Company:          VUT FEKT Brno
+-- Engineer:         Libor Brostík, Jakub Dibelka
+-- 
+-- Create Date:      08.03.2026
+-- Design Name:      counter
+-- Entity Name:      counter
+-- Project Name:     DE1_projekt_5
+-- Target Devices:   Nexys A7 50T
+-- Tool Versions:    Vivado 2025.2
+-- 
+-- Description: 
+--    Generic N-bit binary up-counter with synchronous reset and clock enable.
+--    The output value increments on rising edges when 'en' is high.
 --
--- Notes:
--- - Synchronous design (rising edge of clk)
--- - High-active synchronous reset
--- - Enable input controls counting
--- - Modulo 2^N operation (automatic wrap-around)
--- - Integer-based internal counter
--------------------------------------------------
+-- Dependencies: 
+--    None
+--
+-- License: MIT  
+----------------------------------------------------------------------------------
 
 library ieee;
 use ieee.std_logic_1164.all;

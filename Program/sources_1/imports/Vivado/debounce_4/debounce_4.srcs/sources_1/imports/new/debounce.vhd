@@ -1,15 +1,23 @@
 ----------------------------------------------------------------------------------
--- Company: VUT
--- Engineer: BRostík, Dibelka
+-- Company:          VUT FEKT Brno
+-- Engineer:         Libor Brostík, Jakub Dibelka
 -- 
--- Create Date: 03/19/2026 01:09:52 PM
--- Design Name: 
--- Module Name: debounce - Behavioral
--- Project Name: 
--- Target Devices: Nexys A7 50T
+-- Create Date:      19.03.2026
+-- Design Name:      debounce
+-- Entity Name:      debounce
+-- Project Name:     DE1_projekt_5
+-- Target Devices:   Nexys A7 50T
+-- Tool Versions:    Vivado 2025.2
 -- 
--- Revision:
--- Revision 0.01 - File Created
+-- Description: 
+--    Button debouncing module for Nexys A7. Processes 4 inputs simultaneously 
+--    using shift registers to ensure stable output states and noise rejection 
+--    from mechanical switches.
+--
+-- Dependencies: 
+--    Clock_En
+--
+-- License: MIT   
 ----------------------------------------------------------------------------------
 
 library IEEE;
