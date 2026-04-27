@@ -465,16 +465,12 @@ end Behavioral;
 ## Lab3: Integration
 ### 7-segment display
 Pro lepší přehled nad aktuálním nastavením byl dodatečně přidán modul pro 7-segmentový displej. Díky němu můžeme sledovat aktualní hodnoty dle vybraného nastavení
-#### 7-segment VHDL
-
-[Kód Display Driver](Program/sources_1/imports/new/display_driver.vhd)
+#### [7-segment VHDL](Program/sources_1/imports/new/display_driver.vhd)
 
 ### Top-Level
 Je to hlavní entita, která je spojnice mezi programem a hardwarem. V této entitě se inicializují vstupy a výstupy všech modulů.
 
-#### Top-Level VHDL
-
-[Kód Top-Level](Program/sources_1/RGB_Mood_Lamp_top.vhd)
+#### [Top-Level VHDL](Program/sources_1/RGB_Mood_Lamp_top.vhd)
 
 ## Lab4: Tuning
 Zaměřili na ladění kódu, identifikaci a následnou opravu chyb programů.
