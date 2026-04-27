@@ -136,14 +136,14 @@ Zaměřili jsme se na ladění kódu, nalezení a následnou opravu chyb a nedos
 Dodělávání programů a odstraňování zbývajících nedostatků a kompletace dokumentace (README, poster a video)
 
 ### Poster A3
-  Poster popisující základní princip programu a funkčnost programu.
+ &nbsp;&nbsp;&nbsp; Poster popisující základní princip programu a funkčnost programu.
   
-  [Poster A3](Other/poster.png)
+ &nbsp;&nbsp;&nbsp; [Poster A3](other/poster.png)
   
 ### Video
-  Video ukazující funčnost proggramu na desce Nexys A7 50T
+ &nbsp;&nbsp;&nbsp; Video ukazující funčnost proggramu na desce Nexys A7 50T
 
-  [Video](Other/video.mp4)
+ &nbsp;&nbsp;&nbsp; [Video](Other/video.mp4)
 
 ## Zdrojové kódy VHDL
 * [Toplevel RGB Mood Lamp](Program/sources_1/RGB_Mood_Lamp_top.vhd)
