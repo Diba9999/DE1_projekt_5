@@ -23,7 +23,7 @@ Cílem projektu je návrh a implementace ovladače pro RGB lampu na desce Nexys 
 * [Lab3: Integration](#lab3-integration)
 * [Lab4: Tuning](#lab4-tuning)
 * [Lab5: Completion](#lab5-completion)
-* [Zdrojové kódy VHDL](#zdrojové-kódy)
+* [Zdrojové soubory](#zdrojové-soubory)
   
 ## Lab1: Architecture
 ### Blokové schéma
@@ -149,7 +149,11 @@ Dodělávání programů a odstraňování zbývajících nedostatků a kompleta
  
  &nbsp;&nbsp;&nbsp; [Video](other/video.mp4)
 
-## Zdrojové kódy VHDL
+## Zdrojové soubory
+### Soubor projektu
+* [Project RGB Mood Lamp](Program/RGB_Mood_Lamp_top.xpr)
+
+### VHDL programy
 * [Toplevel RGB Mood Lamp](Program/sources_1/RGB_Mood_Lamp_top.vhd)
 * [Color Control](Program/sources_1/imports/Vivado/color_control/color_control.srcs/sources_1/new/color_control.vhd)
 * [PWM Driver](Program/sources_1/imports/Vivado/pwm_driver/pwm_driver.srcs/sources_1/new/pwm_driver.vhd)
