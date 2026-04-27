@@ -141,7 +141,7 @@ Dodělávání programů a odstraňování zbývajících nedostatků a kompleta
   
 ### Video
  &nbsp;&nbsp;&nbsp; Video ukazující funčnost programu na desce Nexys A7 50T
-
+![Video](https://[github.com](https://github.com/Diba9999/DE1_projekt_5/blob/develop/other/video.mp4))
  &nbsp;&nbsp;&nbsp; [Video](other/video.mp4)
 
 ## Zdrojové kódy VHDL
