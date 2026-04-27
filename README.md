@@ -23,8 +23,8 @@ Cílem projektu je návrh a implementace ovladače pro RGB lampu na desce Nexys 
 * [Lab3: Integration](#lab3-integration)
 * [Lab4: Tuning](#lab4-tuning)
 * [Lab5: Completion](#lab5-completion)
-* [Zdrojové kódy](#zdrojové-kody)
-
+* [Zdrojové kódy](#zdrojové-kódy)
+  
 ## Lab1: Architecture
 ### Blokové schéma
 Návrh blokového schématu pro naší aplikaci
@@ -585,7 +585,9 @@ Je to hlavní entita, která je spojnice mezi programem a hardwarem. V této ent
 #### Top-Level VHDL
 <details>
 <summary>Kód zde</summary>
-  
+
+[Toplevel RGB Mood Lamp](Program/sources_1/RGB_Mood_Lamp_top.vhd)
+
 ```vhdl
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
@@ -778,6 +780,15 @@ Zaměřili na ladění kódu, identifikaci a následnou opravu chyb programů.
 
 ## Lab5: Completion
 
-## Zdrojové-kódy
+## Zdrojové kódy
 • [Toplevel RGB Mood Lamp](Program/sources_1/RGB_Mood_Lamp_top.vhd)
+• [Color Control](Program/sources_1/imports/Vivado/color_control/color_control.srcs/sources_1/new/color_control.vhd)
+• [PWM Driver](Program/sources_1/imports/Vivado/pwm_driver/pwm_driver.srcs/sources_1/new/pwm_driver.vhd)
+• [Debounce](Program/sources_1/imports/Vivado/debounce_4/debounce_4.srcs/sources_1/imports/new/debounce.vhd)
+• [Clock Enable](Program/sources_1/imports/Vivado/debounce_4/debounce_4.srcs/sources_1/imports/new/clk_en.vhd)
+• [Display Driver](Program/sources_1/imports/new/display_driver.vhd)
+• [Counter](Program/sources_1/imports/new/counter.vhd)
+• [Bin 2 Seg](Program/sources_1/imports/new/bin2seg.vhd)
+
+
 
