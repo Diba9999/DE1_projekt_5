@@ -142,7 +142,7 @@ Dodělávání programů a odstraňování zbývajících nedostatků a kompleta
 ### Poster A3
  &nbsp;&nbsp;&nbsp; Poster popisující základní princip programu a funkčnost programu.
   
- &nbsp;&nbsp;&nbsp; [Poster A3](other/poster.pdf)
+ &nbsp;&nbsp;&nbsp; [Poster A3](other/poster_v2.pdf)
   
 ### Video
  &nbsp;&nbsp;&nbsp; Video ukazující funčnost programu na desce Nexys A7 50T
