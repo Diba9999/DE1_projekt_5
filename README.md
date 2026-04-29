@@ -147,7 +147,7 @@ Dodělávání programů a odstraňování zbývajících nedostatků a kompleta
 ### Video
  &nbsp;&nbsp;&nbsp; Video ukazující funčnost programu na desce Nexys A7 50T
  
- &nbsp;&nbsp;&nbsp; [Video](other/video.mp4)
+ &nbsp;&nbsp;&nbsp; [Video]((https://www.youtube.com/watch?v=J7UPF7PQyw4))
 
 ## Zdrojové soubory
 ### Soubor projektu
