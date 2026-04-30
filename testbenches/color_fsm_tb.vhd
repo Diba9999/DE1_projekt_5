@@ -3,7 +3,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
 entity color_control_tb is
--- Testbench nemá porty
+    
 end color_control_tb;
 
 architecture sim of color_control_tb is
