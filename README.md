@@ -151,8 +151,8 @@ Dodělávání programů a odstraňování zbývajících nedostatků a kompleta
 
 ## Zdrojové soubory
 ### Soubor projektu
-* [Project RGB Mood Lamp](Program/RGB_Mood_Lamp_top.xpr)
-* [Program RGB Mood Lamp](RGB_Mood_Lamp_top.zip)
+* [Program RGB Mood Lamp](Program/RGB_Mood_Lamp_top.xpr)
+* [Project RGB Mood Lamp (zip)](RGB_Mood_Lamp_top.zip)
 
 ### VHDL programy
 * [Toplevel RGB Mood Lamp](Program/sources_1/RGB_Mood_Lamp_top.vhd)
