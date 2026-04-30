@@ -147,11 +147,12 @@ Dodělávání programů a odstraňování zbývajících nedostatků a kompleta
 ### Video
  &nbsp;&nbsp;&nbsp; Video ukazující funčnost programu na desce Nexys A7 50T
  
- &nbsp;&nbsp;&nbsp; [Video](other/video.mp4)
+ &nbsp;&nbsp;&nbsp; [Video](https://www.youtube.com/watch?v=J7UPF7PQyw4)
 
 ## Zdrojové soubory
 ### Soubor projektu
-* [Project RGB Mood Lamp](Program/RGB_Mood_Lamp_top.xpr)
+* [Program RGB Mood Lamp](Program/RGB_Mood_Lamp_top.xpr)
+* [Project RGB Mood Lamp (zip)](RGB_Mood_Lamp_top.zip)
 
 ### VHDL programy
 * [Toplevel RGB Mood Lamp](Program/sources_1/RGB_Mood_Lamp_top.vhd)
