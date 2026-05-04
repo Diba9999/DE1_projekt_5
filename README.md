@@ -24,6 +24,7 @@ Cílem projektu je návrh a implementace ovladače pro RGB lampu na desce Nexys 
 * [Lab4: Tuning](#lab4-tuning)
 * [Lab5: Completion](#lab5-completion)
 * [Zdrojové soubory](#zdrojové-soubory)
+* [Využití prostředků (Resource Utilization)](#resource-utilization-report-report)
   
 ## Lab1: Architecture
 ### Blokové schéma
