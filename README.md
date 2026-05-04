@@ -165,7 +165,7 @@ Dodělávání programů a odstraňování zbývajících nedostatků a kompleta
 * [Bin 2 Seg](Program/sources_1/imports/new/bin2seg.vhd)
 
 
-## Resource Utilization Report ([report](other/Synth Design - synth_1.txt))
+## Resource Utilization Report ([report](<other/Synth Design - synth_1.txt>))
 Tento projekt byl syntetizován pomocí nástroje **Vivado v.2025.2** pro cílové zařízení **Artix-7** (čip `xc7a50ticsg324-1L`).
 
 ### Main Resource Summary
