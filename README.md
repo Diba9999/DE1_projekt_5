@@ -4,7 +4,7 @@ Cílem projektu je návrh a implementace ovladače pro RGB lampu na desce Nexys 
 
 ### Členové týmu
   #### Jakub Dibelka
-  * návrh a tvorba programu
+  * návrh a tvorba programu, video
   #### Libor Brostík
   * finální dokumentace projektu (README.md) a tvorba programu
 
